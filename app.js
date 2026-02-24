@@ -256,6 +256,15 @@ function initFilters() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  fetch("/.auth/me")
+    .then((res) => res.json())
+    .then(({ clientPrincipal }) => {
+      if (clientPrincipal) {
+        const nameEl = document.getElementById("user-name");
+        if (nameEl) nameEl.textContent = clientPrincipal.userDetails;
+      }
+    });
+
   const form = document.getElementById("case-form");
   if (form) {
     form.addEventListener("submit", handleFormSubmit);
@@ -269,4 +278,3 @@ window.addEventListener("DOMContentLoaded", () => {
   initFilters();
   renderCases("open");
 });
-
